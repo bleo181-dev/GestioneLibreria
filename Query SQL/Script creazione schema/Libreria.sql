@@ -31,45 +31,54 @@ CREATE TABLE Dipartimento (
 );
 
 
-CREATE TABLE Libro(
-	Codice_libro 	INT NOT NULL AUTO_INCREMENT,
-Titolo		VARCHAR(100),
+CREATE TABLE Libro( 
+	Codice_libro 	INT NOT NULL AUTO_INCREMENT,	
+Titolo		VARCHAR(100), 	
 	ISBN		VARCHAR(20),
-Lingua		VARCHAR(30),
-	Anno_pubblicazione		INT,
-	Codice_dipartimento	INT,
-
-	PRIMARY KEY (Codice_libro),
-	FOREIGN KEY (Codice_dipartimento) REFERENCES Dipartimento(Codice_dipartimento) ON DELETE CASCADE ON UPDATE CASCADE
+Lingua		VARCHAR(30),	 	
+	Anno_pubblicazione		INT,		
+	Codice_dipartimento	INT,		
+	
+	PRIMARY KEY (Codice_libro), 	
+	FOREIGN KEY (Codice_dipartimento) REFERENCES Dipartimento(Codice_dipartimento) 
+ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Autore(
-	Codice_autore		INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE Autore( 
+	Codice_autore		INT NOT NULL AUTO_INCREMENT,		
 	Nome 	VARCHAR(30),
 	Cognome 	VARCHAR(30),
 	Data_nascita 		DATE,
 	Luogo_nascita VARCHAR(30),
-
+	
 	PRIMARY KEY (Codice_autore)
 );
 
-CREATE TABLE Prestito(
+CREATE TABLE Prestito( 
 	Codice		INT NOT NULL AUTO_INCREMENT,
 	Codice_libro	INT,
 	Matricola	INT,
-	Data_uscita DATE,
-
+	Data_uscita BOOLEAN,
+Restituito	BOOLEAN,
+	
 	PRIMARY KEY (Codice),
-	FOREIGN KEY (Codice_libro) REFERENCES Libro(Codice_libro) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (Matricola) REFERENCES Utente(Matricola) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY (Codice_libro) REFERENCES Libro(Codice_libro) 
+ON DELETE CASCADE ON UPDATE CASCADE, 
+	FOREIGN KEY (Matricola) REFERENCES Utente(Matricola) 
+ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Scrive(
+CREATE TABLE Scrive( 
 	Codice		INT NOT NULL AUTO_INCREMENT,
 	Codice_libro	INT,
 	Codice_autore		INT,
-
+	
 	PRIMARY KEY (Codice),
-	FOREIGN KEY (Codice_libro) REFERENCES Libro(Codice_libro) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (Codice_libro) REFERENCES Libro(Codice_libro) 
+ON DELETE CASCADE ON UPDATE CASCADE, 
 	FOREIGN KEY (Codice_autore) REFERENCES Autore(Codice_autore)
 );
+
+
+
+
