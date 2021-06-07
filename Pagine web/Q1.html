@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+
+		<title>Ricerca libro</title>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+
+		<style>
+			body {
+				max-width: 1200px;
+			}
+
+			fieldset {
+  				border: 1px #0096bfab solid;
+  				border: 1px var(--focus) solid;
+  				border-radius: 6px;
+  				margin-bottom: 12px;
+  				padding: 10px;
+			}
+		</style>
+    </head>
+
+    <body>
+		<form action="php/GetLibri.php" method="POST">
+			<fieldset>
+			<h1 style="text-align:center">Ricerca di un libro</h1>
+		<p style="text-align: center">
+			Ricerca di un libro inserendo il titolo (anche parziale) <br> nel caso in cui nessun
+			parametro venga specificato deve essere presentata la lista completa dei libri.
+		 </p>
+				<input  style="width: 98.3%; " type="text" name="nomeL" placeholder="Scrivi qui il nome del libro">
+        <input style="width: 100%; " type="submit" value="Invia" />
+            </fieldset>
+
+		</form>
+    </body>
+
+</html>
