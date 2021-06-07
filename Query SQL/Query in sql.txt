@@ -1,0 +1,366 @@
+﻿Ricerca di un libro inserendo il titolo (anche parziale) - nel caso in cui nessun parametro venga specificato deve essere presentata la lista completa dei libri:
+
+
+prima parte:
+SELECT * FROM Libreria.Libro 
+WHERE Titolo LIKE '%TITOLO INSERITO%'; 
+
+
+seconda parte:
+SELECT * FROM Libreria.Libro 
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Visualizzazione di tutti i libri di un determinato autore, eventualmente suddivisi per
+anno di pubblicazione.
+
+
+SELECT Libro.Codice_libro, Libro.Titolo, Libro.ISBN, Libro.Lingua, Libro.Anno_pubblicazione, Libro.Codice_dipartimento
+FROM Libro, Autore, Scrive 
+WHERE Autore.Codice_autore = "1" AND Autore.Codice_autore = Scrive.Codice_autore AND  Scrive.Codice_libro = Libro.Codice_libro
+ORDER BY Anno_pubblicazione;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Ricerca degli autori inserendo uno o più parametri (anche parziali), in forma libera o
+eventualmente guidata (per esempio menù a tendina con i soli valori possibili).
+
+
+stringa query;
+if(Nome.settato == vero){
+  query = query + "value";
+}
+if(Cognome.settato == vero){
+  query = query + ", Cognome = " + "'$value'";
+}
+if(Data.settato == vero){
+  query = query + "value";
+}
+sql.query("SELECT * FROM Autore WHERE 'query'");
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Consultare l’elenco degli utenti della biblioteca (con le informazioni principali).
+SELECT * 
+FROM Utente;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ricerca di un utente della biblioteca e il suo storico dei prestiti (compresi quelli in
+corso).
+
+
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Utente.Numero_telefono, Utente.Via, Utente.Numero_civico, Utente.Codice_postale, Utente.Città, Utente.Sesso, Utente.Data_nascita, Libro.Titolo, Libro.ISBN, Libro.Lingua, Libro.Anno_pubblicazione,Prestito.Data_uscita, Prestito.Restituito, Dipartimento.Nome, Dipartimento.Via, Dipartimento.Numero_civico, Dipartimento.Codice_postale, Dipartimento.Città
+FROM Utente, Prestito, Libro, Dipartimento
+WHERE Utente.Matricola = "100005" AND Utente.Matricola = Prestito.Matricola AND
+Libro.Codice_libro = Prestito.Codice_libro AND Libro.Codice_dipartimento = Dipartimento.Codice_dipartimento
+ORDER BY Prestito.Data_uscita DESC;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Consultare lo storico dei prestiti.
+
+
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Utente.Numero_telefono, Utente.Via, Utente.Numero_civico, Utente.Codice_postale, Utente.Città, Utente.Sesso, Utente.Data_nascita, Libro.Titolo, Libro.ISBN, Libro.Lingua, Libro.Anno_pubblicazione,Prestito.Data_uscita, Prestito.Restituito, Dipartimento.Nome, Dipartimento.Via, Dipartimento.Numero_civico, Dipartimento.Codice_postale, Dipartimento.Città
+FROM Utente, Prestito, Libro, Dipartimento
+WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Libro.Codice_dipartimento = Dipartimento.Codice_dipartimento
+ORDER BY Prestito.Data_uscita DESC;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Ricerca dei prestiti effettuati in un range di date – nel caso in cui non vengano
+inserite date deve mostrare i prossimi in scadenza (quelli che scadranno in futuro).
+
+
+prima parte:
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Utente.Numero_telefono, Utente.Via, Utente.Numero_civico, Utente.Codice_postale, Utente.Città, Utente.Sesso, Utente.Data_nascita, Libro.Titolo, Libro.ISBN, Libro.Lingua, Libro.Anno_pubblicazione,Prestito.Data_uscita, Prestito.Restituito, Dipartimento.Nome, Dipartimento.Via, Dipartimento.Numero_civico, Dipartimento.Codice_postale, Dipartimento.Città
+FROM Utente, Prestito, Libro, Dipartimento
+WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Libro.Codice_dipartimento = Dipartimento.Codice_dipartimento
+AND Prestito.Data_uscita BETWEEN "data 1" AND "data 2"
+ORDER BY Prestito.Data_uscita;
+
+
+
+
+
+
+
+
+
+
+seconda parte:
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Utente.Numero_telefono, Utente.Via, Utente.Numero_civico, Utente.Codice_postale, Utente.Città, Utente.Sesso, Utente.Data_nascita, Libro.Titolo, Libro.ISBN, Libro.Lingua, Libro.Anno_pubblicazione,Prestito.Data_uscita, Prestito.Restituito, Dipartimento.Nome, Dipartimento.Via, Dipartimento.Numero_civico, Dipartimento.Codice_postale, Dipartimento.Città
+FROM Utente, Prestito, Libro, Dipartimento
+WHERE Utente.Matricola = Prestito.Matricola AND
+Libro.Codice_libro = Prestito.Codice_libro AND
+Libro.Codice_dipartimento = Dipartimento.Codice_dipartimento AND Prestito.Restituito = "0"
+AND Prestito.Data_uscita > date_sub(current_date(), INTERVAL 30 DAY)
+ORDER BY Prestito.Data_uscita;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Calcolo di statistiche relative a libri e autori:
+Numero di libri pubblicati in un determinato anno.
+
+
+SELECT COUNT(Libro.Codice_libro)
+FROM Libro
+WHERE Libro.Anno_pubblicazione = "2017"
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Numero di prestiti effettuati in una determinata succursale.
+
+
+SELECT COUNT(Prestito.Codice) AS Numero_prestiti
+FROM Prestito, Libro, Dipartimento
+WHERE Dipartimento.Codice_dipartimento = "1" AND 
+Prestito.Codice_libro = Libro.Codice_libro AND 
+Libro.Codice_dipartimento = Dipartimento.Codice_dipartimento
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Numero di libri per autore.
+
+
+SELECT Autore.Codice_autore, Autore.Nome, Autore.Cognome ,COUNT(Libro.Codice_libro)  AS Numero_libri
+FROM Scrive, Libro, Autore
+WHERE Scrive.Codice_autore = Autore.Codice_autore AND
+Scrive.Codice_libro = Libro.Codice_libro
+GROUP BY Autore.Codice_autore
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+QUERY EXTRA DI LEO:
+
+
+MOSTRA IL LIBRO (O I LIBRI IN CASO DI PAREGGIO)  PIÙ PRESO/I  IN PRESTITO DA MASCHI O FEMMINE
+
+
+SELECT Libro.Codice_libro, Libro.Titolo, count(Prestito.Codice) AS Letto_Da
+FROM Utente, Prestito, Libro  
+WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Utente.Sesso = "F"
+GROUP BY Libro.Codice_libro
+HAVING count(Prestito.Codice)=( 
+        SELECT MAX(NumPrestiti) 
+        FROM ( 
+                SELECT Libro.Codice_libro, count(Prestito.Codice) NumPrestiti 
+                FROM Utente, Prestito, Libro  
+                WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Utente.Sesso = "F"
+                GROUP BY Libro.Codice_libro) AS Conteggio);
+
+
+
+
+MOSTRA GLI UTENTI MASCHIO/FEMMINA CON  PIÙ PRESTITI EFFETTUATI IN UN DETERMINATO MESE
+
+
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Utente.Sesso, count(Prestito.Codice) 
+FROM Utente, Prestito, Libro  
+WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Utente.Sesso = "M" AND month(Prestito.Data_uscita) = "1"
+GROUP BY Utente.Matricola 
+HAVING count(Prestito.Codice)=( 
+        SELECT MAX(NumPrestiti) 
+        FROM ( 
+                SELECT Utente.Matricola, count(Prestito.Codice) NumPrestiti 
+                FROM Utente, Prestito, Libro  
+                WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Utente.Sesso = "M" AND month(Prestito.Data_uscita) = "1"
+                GROUP BY Utente.Matricola) AS Conteggio);
+
+
+
+
+
+
+
+
+
+
+MOSTRA I LIBRI PIù LETTI PER FASCIA DI ETÀ DI MASCHI O FEMMINE 
+
+
+SELECT Libro.Codice_libro, Libro.Titolo, count(Prestito.Codice) AS Letto_Da
+FROM Utente, Prestito, Libro  
+WHERE Utente.Matricola = Prestito.Matricola AND
+ Libro.Codice_libro = Prestito.Codice_libro AND
+ Utente.Sesso = "M" AND 
+ Utente.Data_nascita BETWEEN "1990-01-01" AND "2000-01-01"
+GROUP BY Libro.Codice_libro
+HAVING count(Prestito.Codice) =(
+SELECT MAX(Migliore)
+FROM ( 
+        SELECT Libro.Codice_libro, count(Prestito.Codice) AS Migliore
+        FROM Utente, Prestito, Libro 
+        WHERE Utente.Matricola = Prestito.Matricola AND
+        Libro.Codice_libro = Prestito.Codice_libro AND
+        Utente.Sesso = "M" AND 
+        Utente.Data_nascita BETWEEN "1990-01-01" AND "2000-01-01"
+        GROUP BY Libro.Codice_libro
+        ) as MAX )
+
+
+
+
+MOSTRA I LIBRI PIù LETTI PER FASCIA DI ETÀ DI MASCHI E FEMMINE 
+
+
+SELECT Utente.Sesso, Libro.Codice_libro, Libro.Titolo, count(Prestito.Codice) AS Letto_Da
+FROM Utente, Prestito, Libro  
+WHERE Utente.Matricola = Prestito.Matricola AND
+ Libro.Codice_libro = Prestito.Codice_libro AND 
+ Utente.Data_nascita BETWEEN "1990-01-01" AND "2000-01-01"
+GROUP BY Utente.Sesso, Libro.Codice_libro
+HAVING count(Prestito.Codice) =(
+SELECT MAX(Migliore)
+FROM ( 
+        SELECT Utente.Sesso, Libro.Codice_libro, count(Prestito.Codice) AS Migliore
+        FROM Utente, Prestito, Libro 
+        WHERE Utente.Matricola = Prestito.Matricola AND
+        Libro.Codice_libro = Prestito.Codice_libro AND 
+        Utente.Data_nascita BETWEEN "1990-01-01" AND "2000-01-01"
+        GROUP BY Utente.Sesso, Libro.Codice_libro
+        ) as MAX )
+ORDER BY Utente.Sesso;
+
+
+
+
+
+
+
+
+
+
+
+
+UTENTE MASCHIO/FEMMINA CHE HA RUBATO PIù LIBRI E QUALI
+
+
+PRIMA PARTE
+
+
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, count(Utente.Matricola) as furti
+FROM Utente, Prestito
+WHERE Utente.Matricola = Prestito.Matricola AND Prestito.Restituito = 0 AND Prestito.Data_uscita < date_sub(current_date(), INTERVAL 30 DAY) AND Utente.Sesso = "M"
+GROUP BY Utente.Matricola
+HAVING count(Utente.Matricola)=( 
+        SELECT MAX(NumFurti) 
+        FROM ( 
+                SELECT Utente.Matricola, count(Utente.Matricola) as NumFurti
+                FROM Utente, Prestito
+                WHERE Utente.Matricola = Prestito.Matricola AND Prestito.Restituito = 0 AND Prestito.Data_uscita < date_sub(current_date(), INTERVAL 30 DAY) AND Utente.Sesso = "M"
+                GROUP BY Utente.Matricola) AS Conteggio)
+ORDER BY Utente.Matricola;
+
+
+
+
+SECONDA PARTE
+
+
+SELECT Utente.Matricola, Utente.Nome, Utente.Cognome, Libro.Titolo, Prestito.Data_uscita
+FROM Utente, Prestito, Libro
+WHERE Utente.Matricola = Prestito.Matricola AND Libro.Codice_libro = Prestito.Codice_libro AND Prestito.Restituito = 0 AND Prestito.Data_uscita < date_sub(current_date(), INTERVAL 30 DAY)
+HAVING Utente.Matricola IN (
+        SELECT Utente.Matricola
+                FROM Utente, Prestito
+                WHERE Utente.Matricola = Prestito.Matricola AND Prestito.Restituito = 0 AND Prestito.Data_uscita < date_sub(current_date(), INTERVAL 30 DAY) AND Utente.Sesso = "M"
+                GROUP BY Utente.Matricola
+                HAVING count(Utente.Matricola)=( 
+                        SELECT MAX(NumFurti) 
+                        FROM ( 
+                                SELECT Utente.Matricola, count(Utente.Matricola) as NumFurti
+                                FROM Utente, Prestito
+                                WHERE Utente.Matricola = Prestito.Matricola AND Prestito.Restituito = 0 AND Prestito.Data_uscita < date_sub(current_date(), INTERVAL 30 DAY) AND Utente.Sesso = "M"
+                                GROUP BY Utente.Matricola) AS Conteggio))
+ORDER BY Utente.Matricola;
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+QUERY DI ANTLOX:
+
+
+MOSTRA GLI AUTORI PIÙ LETTI IN UN DETERMINATO ANNO DA MASCHI O FEMMINE
+SELECT Autore.Codice_autore, Autore.Nome, count(Autore.Codice_autore)AS Migliore
+FROM Utente, Prestito, Libro, Autore, Scrive  
+WHERE Utente.Matricola = Prestito.Matricola AND 
+Libro.Codice_libro = Prestito.Codice_libro AND 
+Libro.Codice_libro = Scrive.Codice_libro AND
+Autore.Codice_autore = Scrive.Codice_autore AND  
+Utente.Sesso = "M" AND year(Utente.Data_nascita) = 1992
+group by Autore.Codice_autore
+having count(Autore.Codice_autore) =(
+SELECT MAX(Migliore)
+FROM ( 
+        SELECT Autore.Codice_autore, Autore.Nome, count(Autore.Codice_autore)AS Migliore
+        FROM Utente, Prestito, Libro, Autore, Scrive  
+        WHERE Utente.Matricola = Prestito.Matricola AND 
+        Libro.Codice_libro = Prestito.Codice_libro AND 
+        Libro.Codice_libro = Scrive.Codice_libro AND
+        Autore.Codice_autore = Scrive.Codice_autore AND  
+        Utente.Sesso = "M" AND year(Utente.Data_nascita) = 1992
+        group by Autore.Codice_autore
+) as MAX
+)
+order by Autore.Codice_autore;
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
