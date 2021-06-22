@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+		        
+		<title>Home biblioteca</title>
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+
+		<style>
+			body {
+				max-width: 60%;
+			}
+            .main_div {
+                text-align:center;
+                right: 0%;
+                height: 110px;
+                bottom: 0%;
+                width: 100%;
+                background-color: rgb(19, 48, 90);
+
+                box-shadow: 0px 0px 30px rgb(141, 181, 238);
+            }
+            
+            .h3[type="desc"]{
+                float:left;
+            }
+
+            .submit{
+                float:right;
+                width: 20%;
+            }
+  
+
+
+
+
+		</style>
+    </head>
+
+    <body>
+        
+		
+        <div style="text-align: center;"><img src="immagini/logo.png" ></div>
+        
+        <p style="text-align:center"> Funzionalità della biblioteca, ogni sezione conduce ad una pagina per consultare dati statistici e altre tipologie di dati riguardanti: libri, utenti, autori e prestiti, presenti all'interno della libreria!</p>
+          <br><h3>Consulta i dati della biblioteca</h3><hr><br>
+
+          <div class="main_div" style="position:fixed;">
+                    <p><h4 style="text-align:center">Basi di dati 2020/21 - Progetto "Gestione di una biblioteca" di </h4><h3 style="text-align:center"><a href="mailto:lorenzo.antenucci@edu.unife.it"> Lorenzo Antenucci</a> &nbsp; <a href="mailto:leonardo.bombonati@edu.unife.it"> Leonardo Bombonati </a>| Gruppo 6</h3></p>
+
+    
+                    
+                </div>
+
+
+          <fieldset>
+              
+                <form action="Q1.html" method="POST">
+                    <p>Ricerca di un libro inserendo il titolo (anche parziale) - nel caso in cui nessun parametro venga specificato deve essere presentata la lista completa dei libri:</p>
+                        <input type="submit" class="submit" value="Vai"> <h3 type="desc">Q1</h3>
+                      
+                </form>
+          </fieldset>
+
+          <fieldset>
+            <form action="Q2.php" method="POST">
+                <p>Visualizzazione di tutti i libri di un determinato autore, eventualmente suddivisi per anno di pubblicazione:</p>
+                    <input type="submit" class="submit" value="Vai"><h3 type="desc">Q2</h3>
+                  
+            </form>
+      </fieldset>
+
+      <fieldset>
+        <form action="Q3.html" method="POST">
+            <p>Ricerca degli autori inserendo uno o più parametri (anche parziali), in forma libera o eventualmente guidata (per esempio menù a tendina con i soli valori possibili):</p>
+                <input type="submit" class="submit" value="Vai"><h3 type="desc">Q3</h3>
+              
+        </form>
+  </fieldset>
+
+  <fieldset>
+    <form action="Q4.php" method="POST">
+        <p>Consultare l’elenco degli utenti della biblioteca (con le informazioni principali):</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q4</h3>
+          
+    </form>
+</fieldset>
+
+<fieldset>
+    <form action="Q5.php" method="POST">
+        <p>Ricerca di un utente della biblioteca e il suo storico dei prestiti (compresi quelli in corso):</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q5</h3>
+          
+    </form>
+</fieldset>
+
+<fieldset>
+    <form action="Q6.php" method="POST">
+        <p>Consultare lo storico dei prestiti:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q6</h3>
+          
+    </form>
+</fieldset>
+		
+<fieldset>
+    <form action="Q7.php" method="POST">
+        <p>Ricerca dei prestiti effettuati in un range di date – nel caso in cui non vengano inserite date deve mostrare i prossimi in scadenza (quelli che scadranno in futuro):</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q7</h3>
+          
+    </form>
+</fieldset>
+<br><h3>Query statistiche</h3><hr><br>
+<fieldset>
+    <form action="Q8_1.html" method="POST">
+        <p>Numero di libri pubblicati in un determinato anno:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q8.1</h3>
+          
+    </form>
+</fieldset>
+
+<fieldset>
+    <form action="Q8_2.php" method="POST">
+        <p>Numero di prestiti effettuati in una determinata succursale:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q8.2</h3>
+          
+    </form>
+</fieldset>
+
+<fieldset>
+    <form action="Q8_3.php" method="POST">
+        <p>Numero di libri per autore:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">Q8.3</h3>
+          
+    </form>
+</fieldset>
+
+<br><h3>Query extra</h3><hr><br>
+<fieldset>
+    <form action="QueryExtra1.html" method="POST">
+        <p>Libri più letti per generazione, maschi e femmine:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">QueryExtra1</h3>
+          
+    </form>
+</fieldset>
+
+<fieldset>
+    
+    <form action="QueryExtra2.php" method="POST">
+        <p>Studenti frequentanti le librerie universitarie con più libri non restituiti:</p>
+            <input type="submit" class="submit" value="Vai"><h3 type="desc">QueryExtra2</h3>
+          
+    </form>
+</fieldset>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br> 
+
+
+
+    
+             
+
+    
+    </body>
+
+</html>
